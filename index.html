@@ -1,50 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Crypto Return Calculator</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Crypto Return Calculator</title>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Dark theme with orange and blue accents */
+    body {
+      background-color: #121212;
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #f97316; /* orange */
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin: 15px 0 6px;
+      font-weight: 600;
+      color: #60a5fa; /* blue */
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+      background: #1e293b;
+      color: #eee;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 5px;
+      background: #f97316;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background: #ea580c;
+    }
+    #price-display {
+      font-size: 1.4rem;
+      margin-top: 10px;
+      text-align: center;
+      color: #f97316;
+      font-weight: bold;
+    }
+    #profit-display {
+      margin-top: 25px;
+      text-align: center;
+      font-size: 1.3rem;
+      color: #60a5fa;
+      font-weight: 700;
+    }
+    canvas {
+      margin-top: 30px;
+      background: #1e293b;
+      border-radius: 8px;
+      max-width: 100%;
+      height: 300px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1><span class="crypto-icon">₿</span> Crypto Return Calculator</h1>
 
-    <div class="form-group">
-      <label for="coinSelect">Choose your Crypto:</label>
-      <select id="coinSelect" aria-label="Choose Crypto"></select>
-      <div class="price-container">
-        <span>Live Price: $<span id="livePrice">--</span></span>
-        <button id="refreshPrice" title="Refresh Price" aria-label="Refresh Price">&#x21bb;</button>
-      </div>
-    </div>
+  <h1>AI Crypto Return Calculator</h1>
 
-    <div class="form-group">
-      <label for="quantity">Quantity:</label>
-      <input type="number" id="quantity" min="0" max="100000000" step="any" placeholder="e.g. 100" />
-      <small>Maximum: 100 million</small>
-    </div>
+  <label for="coin-select">Choose your Crypto:</label>
+  <select id="coin-select"></select>
 
-    <div class="form-group">
-      <label for="holdingPeriod">Time Period of Holding (years):</label>
-      <input type="number" id="holdingPeriod" min="0" max="50" step="1" placeholder="e.g. 5" />
-      <small>Maximum: 50 years</small>
-    </div>
+  <div id="price-display">Live Price: -</div>
+  <button id="refresh-btn">Refresh Price & Chart</button>
 
-    <div class="form-group">
-      <label for="sellPrice">Sell Price (USD):</label>
-      <input type="number" id="sellPrice" min="0" step="any" placeholder="e.g. 20" />
-    </div>
+  <label for="quantity-input">Quantity (max 100 million):</label>
+  <input type="number" id="quantity-input" min="0" max="100000000" value="100" />
 
-    <button id="calculateBtn" class="btn">Calculate Return</button>
+  <label for="holding-input">Time Period of Holding (years, max 50):</label>
+  <input type="number" id="holding-input" min="0" max="50" value="5" />
 
-    <div id="result"></div>
+  <label for="sellprice-input">Sell Price (USD):</label>
+  <input type="number" id="sellprice-input" min="0" step="0.01" value="20" />
 
-    <canvas id="returnChart" width="400" height="250"></canvas>
-  </div>
+  <button id="calc-btn">Calculate Profit/Loss</button>
+  <div id="profit-display"></div>
 
-<script src="script.js"></script>
+  <canvas id="price-chart"></canvas>
+
+  <script src="script.js"></script>
 </body>
 </html>
