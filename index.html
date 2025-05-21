@@ -2,107 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Crypto Return Calculator</title>
-
-  <!-- Chart.js CDN -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Return Calculator</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    /* Dark theme with orange and blue accents */
-    body {
-      background-color: #121212;
-      color: #eee;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    h1 {
-      text-align: center;
-      color: #f97316; /* orange */
-      margin-bottom: 30px;
-    }
-    label {
-      display: block;
-      margin: 15px 0 6px;
-      font-weight: 600;
-      color: #60a5fa; /* blue */
-    }
-    select, input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      font-size: 1rem;
-      background: #1e293b;
-      color: #eee;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 12px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 5px;
-      background: #f97316;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background: #ea580c;
-    }
-    #price-display {
-      font-size: 1.4rem;
-      margin-top: 10px;
-      text-align: center;
-      color: #f97316;
-      font-weight: bold;
-    }
-    #profit-display {
-      margin-top: 25px;
-      text-align: center;
-      font-size: 1.3rem;
-      color: #60a5fa;
-      font-weight: 700;
-    }
-    canvas {
-      margin-top: 30px;
-      background: #1e293b;
-      border-radius: 8px;
-      max-width: 100%;
-      height: 300px;
-    }
-  </style>
 </head>
 <body>
+  <div class="container">
+    <div class="toggle">
+      <button onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+    <h2>Crypto Return Calculator</h2>
 
-  <h1>AI Crypto Return Calculator</h1>
+    <label for="crypto">Choose Your Crypto:</label>
+    <select id="crypto"></select>
 
-  <label for="coin-select">Choose your Crypto:</label>
-  <select id="coin-select"></select>
+    <div id="price-display">Live Price: $0.00</div>
+    <div class="row">
+      <button id="refresh">Refresh Price</button>
+      <select id="range">
+        <option value="7">7d</option>
+        <option value="30" selected>30d</option>
+        <option value="90">90d</option>
+        <option value="365">1y</option>
+      </select>
+    </div>
 
-  <div id="price-display">Live Price: -</div>
-  <button id="refresh-btn">Refresh Price & Chart</button>
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" max="100000000" placeholder="e.g. 100" />
 
-  <label for="quantity-input">Quantity (max 100 million):</label>
-  <input type="number" id="quantity-input" min="0" max="100000000" value="100" />
+    <label for="years">Time Period of Holding (years):</label>
+    <input type="number" id="years" max="50" placeholder="e.g. 5" />
 
-  <label for="holding-input">Time Period of Holding (years, max 50):</label>
-  <input type="number" id="holding-input" min="0" max="50" value="5" />
+    <label for="sell-price">Expected Sell Price (USD):</label>
+    <input type="number" id="sell-price" placeholder="e.g. 20" />
 
-  <label for="sellprice-input">Sell Price (USD):</label>
-  <input type="number" id="sellprice-input" min="0" step="0.01" value="20" />
+    <button onclick="calculateReturn()">Calculate Return</button>
+    <button class="secondary-button" onclick="downloadCSV()">Download as CSV</button>
 
-  <button id="calc-btn">Calculate Profit/Loss</button>
-  <div id="profit-display"></div>
+    <h3 id="result"></h3>
 
-  <canvas id="price-chart"></canvas>
+    <canvas id="priceChart" height="100"></canvas>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
